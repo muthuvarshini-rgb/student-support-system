@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Support System</title>
+
+    <!-- INTERNAL CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            background: #007bff;
+            padding: 15px;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            margin-top: 30px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            margin-bottom: 25px;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn-success {
+            background: #28a745;
+        }
+        .ticket {
+            background: #eaeaea;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">Student Support System</div>
+
+    <div class="container">
+
+        <!-- LOGIN SECTION -->
+        <div id="loginSection" class="card">
+            <h2 style="text-align:center;">Student Login</h2>
+            <input id="nameInput" type="text" placeholder="Enter your name" style="width:100%; padding:10px;">
+            <button class="btn" onclick="login()">Login</button>
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="dashboard" style="display:none;">
+
+            <h2>Welcome, <span id="studentName"></span> 👋</h2>
+
+            <!-- Announcements -->
+            <div class="card">
+                <h3>Announcements</h3>
+                <p>• Support office timings: 9 AM – 5 PM</p>
+                <p>• New counselling sessions available</p>
+                <p>• Placement training workshop soon</p>
+            </div>
+
+            <!-- Add Ticket -->
+            <div class="card">
+                <h3>Raise a Support Ticket</h3>
+                <textarea id="ticketInput" placeholder="Type your issue..." style="width:100%; padding:10px;" rows="3"></textarea>
+                <button class="btn-success btn" onclick="addTicket()">Submit Ticket</button>
+            </div>
+
+            <!-- Ticket List -->
+            <div class="card">
+                <h3>Your Tickets</h3>
+                <div id="ticketList"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- INTERNAL JAVASCRIPT -->
+    <script>
+        let tickets = [];  // No storage — fresh every time
+
+        function login() {
+            let name = document.getElementById("nameInput").value.trim();
+            if (name === "") {
+                alert("Please enter your name.");
+                return;
+            }
+
+            document.getElementById("studentName").innerText = name;
+            document.getElementById("loginSection").style.display = "none";
+            document.getElementById("dashboard").style.display = "block";
+        }
+
+        function addTicket() {
+            let issue = document.getElementById("ticketInput").value.trim();
+            if (issue === "") {
+                alert("Please enter your issue.");
+                return;
+            }
+
+            tickets.push(issue);
+            document.getElementById("ticketInput").value = "";
+            updateTickets();
+        }
+
+        function updateTickets() {
+            let list = document.getElementById("ticketList");
+            list.innerHTML = "";
+            tickets.forEach((t, i) => {
+                list.innerHTML += `<div class="ticket"><b>Ticket ${i+1}:</b> ${t}</div>`;
+            });
+        }
+    </script>
+
+</body>
+</html>
